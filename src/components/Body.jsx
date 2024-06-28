@@ -23,23 +23,25 @@ const Body = ({ cat }) => {
     getNews();
   }, [cat]);
 
+  // `https://newsdata.io/api/1/latest?apikey=${import.meta.env.VITE_API_KEY}&q=${cat}`
+
   async function getNews() {
     try {
       const data = await fetch(
         cat
-          ? `https://newsapi.org/v2/everything?q=${cat}&apiKey=${
+          ? `https://newsdata.io/api/1/latest?apikey=${
               import.meta.env.VITE_API_KEY
-            }`
-          : `https://newsapi.org/v2/everything?q=india&apiKey=${
+            }&q=${cat}`
+          : `https://newsdata.io/api/1/latest?apikey=${
               import.meta.env.VITE_API_KEY
-            }`
+            }&q=india`
       );
       if (!data.ok) {
         throw new Error("Network response was not ok");
       }
       const json = await data.json();
-      console.log(json.articles);
-      setContent(json.articles);
+      console.log(json.results);
+      setContent(json.results);
       setError(null); // Reset error state if request is successful
     } catch (err) {
       setError(err.message);
@@ -57,7 +59,12 @@ const Body = ({ cat }) => {
       <div className="parent flex relative flex-wrap justify-between">
         {currentContent.map((item, index) => {
           return (
-            <a key={index} href={item.url} target="_blank" rel="noopener noreferrer">
+            <a
+              key={index}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <div className="">
                 {index % 5 === 0 || index % 5 === 3 ? (
                   <div className="">
