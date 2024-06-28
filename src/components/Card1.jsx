@@ -2,7 +2,7 @@ import React from "react";
 
 const Card1 = ({ info }) => {
   // Destructuring props to extract necessary information
-  const { title, description, image_url, source = {} } = info;
+  const { title, description, urlToImage, source = {} } = info;
   const { name } = source;
 
   // Handling case where image, title, description, or source name might be missing
@@ -16,7 +16,7 @@ const Card1 = ({ info }) => {
   return (
     <div className="w-[23vw] mt-[2vw]">
       {/* Displaying image, fallback to dummy image if urlToImage is not available */}
-      <img src={image_url ? image_url : dummyIMG} alt="" />
+      <img src={urlToImage ? urlToImage : dummyIMG} alt="" />
 
       {/* Displaying title, fallback to dummy title if title is "[Removed]" or not available */}
       <h3 className="text-[1.3vw] pb-[2vw] pt-[2vw]">
